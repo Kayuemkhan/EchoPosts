@@ -10,12 +10,22 @@
         android:name="com.example.echoposts.ui.auth.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
-<!--        <action-->
-<!--            android:id="@+id/action_login_to_register"-->
-<!--            app:destination="@id/registerFragment" />-->
+        <action
+            android:id="@+id/action_login_to_register"
+            app:destination="@id/registerFragment" />
         <action
             android:id="@+id/action_login_to_main"
             app:destination="@id/navigation_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.echoposts.ui.auth.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_register_to_login"
+            app:destination="@id/loginFragment" />
     </fragment>
 
     <fragment
