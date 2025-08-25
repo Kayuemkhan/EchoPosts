@@ -1,6 +1,7 @@
 package com.example.echoposts
 
 import android.os.Bundle
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -12,6 +13,7 @@ import com.example.echoposts.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,14 +21,31 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navView: BottomNavigationView = binding.navView
-
+        navView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.navigation_home ||
+                destination.id == R.id.navigation_search ||
+                destination.id == R.id.navigation_favourites
+            ) {
+                showBottomNav()
+            } else {
+                hideBottomNav()
+            }
+        }
 
         navView.setupWithNavController(navController)
 
 
 
     }
+    private fun hideBottomNav() {
+        navView.visibility = View.GONE
+    }
+
+    private fun showBottomNav() {
+        navView.visibility = View.VISIBLE
+    }
+
 }
