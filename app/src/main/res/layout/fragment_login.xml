@@ -21,10 +21,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/logo"
             android:scaleType="fitXY"
             />
         <TextView
+
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
