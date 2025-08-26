@@ -3,6 +3,7 @@ package com.example.echoposts.di
 import android.content.Context
 import androidx.room.Room
 import com.example.echoposts.data.local.AppDatabase
+import com.example.echoposts.data.local.dao.PostDao
 import com.example.echoposts.data.local.dao.UserDao
 import dagger.Module
 import dagger.Provides
@@ -30,4 +31,8 @@ object DatabaseModule {
         return database.userDao()
     }
 
+    @Provides
+    fun providePostDao(database: AppDatabase): PostDao {
+        return database.postDao()
+    }
 }
