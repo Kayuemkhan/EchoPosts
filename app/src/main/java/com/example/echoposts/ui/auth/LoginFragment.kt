@@ -49,8 +49,7 @@ class LoginFragment : Fragment() {
                     }
                     is AuthState.Success -> {
                         binding.progressBar.visibility = View.GONE
-                        // Navigate to main activity or home fragment
-//                        findNavController().navigate(R.id.action_login_to_main)
+                        findNavController().navigate(R.id.action_login_to_main)
                     }
                     is AuthState.Error -> {
                         binding.btnLogin.isEnabled = true
