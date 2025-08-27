@@ -24,25 +24,31 @@ class PostRepository @Inject constructor(
         const val TOTAL_POSTS = 100 // JSONPlaceholder has 100 posts
     }
 
+    // Existing pagination methods...
     suspend fun getPostsPaginated(page: Int, refresh: Boolean = false): Result<PaginatedResponse<Post>> {
         return withContext(Dispatchers.IO) {
             try {
+                // If refreshing, clear cache first
                 if (refresh && page == 0) {
-
+                    // Could implement cache clearing here if needed
                 }
 
+                // Calculate API parameters
                 val start = page * PAGE_SIZE
                 val hasMore = start + PAGE_SIZE < TOTAL_POSTS
 
+                // Fetch from API
                 val response = apiService.getPostsPaginated(start, PAGE_SIZE)
 
                 if (response.isSuccessful && response.body() != null) {
                     val posts = response.body()!!
 
+                    // Cache the posts
                     if (posts.isNotEmpty()) {
                         postDao.insertPosts(posts.map { it.toEntity() })
                     }
 
+                    // Return paginated response
                     val paginatedResponse = PaginatedResponse(
                         data = posts.map { it.toDomainModel() },
                         hasMore = hasMore,
@@ -65,7 +71,7 @@ class PostRepository @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
-
+                // Try cached data on exception
                 try {
                     val start = page * PAGE_SIZE
                     val cachedPosts = postDao.getPostsPaginated(PAGE_SIZE, start)
@@ -86,6 +92,30 @@ class PostRepository @Inject constructor(
         }
     }
 
+    // New search functionality
+    suspend fun searchPosts(query: String): Result<List<Post>> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val searchQuery = "%$query%"
+                val cachedPosts = postDao.searchPosts(searchQuery)
+                Result.success(cachedPosts.map { it.toDomainModel() })
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    suspend fun getAllCachedPosts(): Result<List<Post>> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val cachedPosts = postDao.getAllPosts()
+                Result.success(cachedPosts.map { it.toDomainModel() })
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
     suspend fun toggleFavourite(postId: Int): Boolean {
         return withContext(Dispatchers.IO) {
             try {
@@ -101,10 +131,4 @@ class PostRepository @Inject constructor(
             }
         }
     }
-
-    suspend fun getFavouritePosts(): Flow<List<Post>> = flow {
-        postDao.getFavouritePosts().collect { favourites ->
-            emit(favourites.map { it.toDomainModel() })
-        }
-    }.flowOn(Dispatchers.IO)
 }
