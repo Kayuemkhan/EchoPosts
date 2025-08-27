@@ -21,34 +21,28 @@ class PostRepository @Inject constructor(
 
     companion object {
         const val PAGE_SIZE = 10
-        const val TOTAL_POSTS = 100 // JSONPlaceholder has 100 posts
+        const val TOTAL_POSTS = 100
     }
 
-    // Existing pagination methods...
     suspend fun getPostsPaginated(page: Int, refresh: Boolean = false): Result<PaginatedResponse<Post>> {
         return withContext(Dispatchers.IO) {
             try {
-                // If refreshing, clear cache first
                 if (refresh && page == 0) {
-                    // Could implement cache clearing here if needed
+
                 }
 
-                // Calculate API parameters
                 val start = page * PAGE_SIZE
                 val hasMore = start + PAGE_SIZE < TOTAL_POSTS
 
-                // Fetch from API
                 val response = apiService.getPostsPaginated(start, PAGE_SIZE)
 
                 if (response.isSuccessful && response.body() != null) {
                     val posts = response.body()!!
 
-                    // Cache the posts
                     if (posts.isNotEmpty()) {
                         postDao.insertPosts(posts.map { it.toEntity() })
                     }
 
-                    // Return paginated response
                     val paginatedResponse = PaginatedResponse(
                         data = posts.map { it.toDomainModel() },
                         hasMore = hasMore,
@@ -57,7 +51,6 @@ class PostRepository @Inject constructor(
 
                     Result.success(paginatedResponse)
                 } else {
-                    // Try to get cached data if API fails
                     val cachedPosts = postDao.getPostsPaginated(PAGE_SIZE, start)
                     if (cachedPosts.isNotEmpty()) {
                         val paginatedResponse = PaginatedResponse(
@@ -71,7 +64,6 @@ class PostRepository @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
-                // Try cached data on exception
                 try {
                     val start = page * PAGE_SIZE
                     val cachedPosts = postDao.getPostsPaginated(PAGE_SIZE, start)
@@ -92,7 +84,6 @@ class PostRepository @Inject constructor(
         }
     }
 
-    // New search functionality
     suspend fun searchPosts(query: String): Result<List<Post>> {
         return withContext(Dispatchers.IO) {
             try {
@@ -154,7 +145,6 @@ class PostRepository @Inject constructor(
     suspend fun clearAllFavourites(): Result<Unit> {
         return withContext(Dispatchers.IO) {
             try {
-                // Get all favourite posts and update them
                 val favourites = postDao.getFavouritePostsList()
                 favourites.forEach { post ->
                     postDao.updateFavouriteStatus(post.id, false)

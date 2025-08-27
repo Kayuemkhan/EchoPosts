@@ -56,9 +56,8 @@ class FavouritesFragment : Fragment() {
             onRemoveClick = { post ->
                 showRemoveConfirmationDialog(post)
             },
-            onPostClick = { post ->
-                // Handle post click - maybe navigate to detail screen
-                // findNavController().navigate(FavouritesFragmentDirections.actionToPostDetail(post.id))
+            onPostClick = {
+
             }
         )
 
@@ -97,7 +96,6 @@ class FavouritesFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        // Observe favourite posts state
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.favouritePostsState.collect { state ->
                 when (state) {
@@ -131,14 +129,12 @@ class FavouritesFragment : Fragment() {
             }
         }
 
-        // Observe refresh state
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.isRefreshing.collect { isRefreshing ->
                 binding.swipeRefreshLayout.isRefreshing = isRefreshing
             }
         }
 
-        // Observe deleting posts
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.deletingPostIds.collect { deletingIds ->
                 favouritesAdapter.setDeletingPosts(deletingIds)

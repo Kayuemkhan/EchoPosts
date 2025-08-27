@@ -91,10 +91,8 @@ class FavouritesViewModel @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
-                // Handle error if needed
                 _favouritePostsState.value = UiState.Error("Failed to remove from favourites")
             } finally {
-                // Remove from deleting set
                 _deletingPostIds.value -= post.id
             }
         }

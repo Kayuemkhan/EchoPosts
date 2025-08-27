@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.echoposts.R
 import com.example.echoposts.databinding.ItemFavouritePostBinding
 import com.example.echoposts.domain.model.Post
 
@@ -21,7 +20,6 @@ class FavouritesAdapter(
         val oldDeletingIds = deletingPostIds
         deletingPostIds = deletingIds
         
-        // Only notify changed items to avoid full list refresh
         val changedIds = (oldDeletingIds + deletingIds) - (oldDeletingIds intersect deletingIds)
         changedIds.forEach { postId ->
             val position = currentList.indexOfFirst { it.id == postId }
@@ -58,10 +56,8 @@ class FavouritesAdapter(
                 tvBody.text = post.body
                 tvUserId.text = "User ${post.userId}"
                 
-                // Set user initial in avatar
                 tvUserInitial.text = post.userId.toString()
                 
-                // Show/hide loading state
                 if (isDeleting) {
                     btnRemove.visibility = View.GONE
                     progressBar.visibility = View.VISIBLE

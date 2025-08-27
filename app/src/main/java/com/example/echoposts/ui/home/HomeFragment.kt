@@ -11,8 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.DividerItemDecoration
-
-import com.example.echoposts.R
 import com.example.echoposts.databinding.FragmentHomeBinding
 import com.example.echoposts.domain.model.SearchState
 import com.example.echoposts.ui.common.PaginationScrollListener
@@ -54,9 +52,9 @@ class HomeFragment : Fragment() {
             onFavouriteClick = { post ->
                 viewModel.toggleFavourite(post)
             },
-            onPostClick = { post ->
-                // Handle post click - maybe navigate to detail screen
+            onPostClick = {
             }
+
         )
 
         layoutManager = LinearLayoutManager(context)
@@ -68,7 +66,6 @@ class HomeFragment : Fragment() {
                 DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
             )
 
-            // Add pagination scroll listener
             addOnScrollListener(object : PaginationScrollListener(this@HomeFragment.layoutManager) {
                 override fun loadMoreItems() {
                     viewModel.loadNextPage()
@@ -122,7 +119,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        // Observe posts
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.posts.collect { posts ->
                 val paginationState = viewModel.paginationState.value
@@ -135,7 +131,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // Observe search state
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.searchState.collect { searchState ->
                 when (searchState) {
@@ -177,7 +172,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // Observe pagination state (existing code)
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.paginationState.collect { state ->
                 when {
@@ -200,7 +194,6 @@ class HomeFragment : Fragment() {
                         binding.recyclerView.visibility = View.VISIBLE
                         binding.searchEmptyState.visibility = View.GONE
 
-                        // Show snackbar for load more errors
                         if (state.error != null && viewModel.posts.value.isNotEmpty() && !viewModel.isSearchMode.value) {
                             showErrorSnackbar("Failed to load more posts: ${state.error}") {
                                 viewModel.loadNextPage()
@@ -210,7 +203,6 @@ class HomeFragment : Fragment() {
                     }
                 }
 
-                // Update posts with current loading state
                 val posts = viewModel.posts.value
                 val isSearchMode = viewModel.isSearchMode.value
                 if (posts.isNotEmpty()) {
@@ -222,7 +214,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // Observe refresh state
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.isRefreshing.collect { isRefreshing ->
                 binding.swipeRefreshLayout.isRefreshing = isRefreshing

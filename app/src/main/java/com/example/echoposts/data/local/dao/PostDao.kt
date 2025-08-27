@@ -50,17 +50,14 @@ interface PostDao {
     @Query("DELETE FROM posts WHERE id IN (:postIds)")
     suspend fun deletePosts(postIds: List<Int>)
 
-    // Get the highest ID to know what's the latest cached post
     @Query("SELECT MAX(id) FROM posts")
     suspend fun getMaxPostId(): Int?
 
-    // Check if we have posts for a specific page
     @Query("SELECT COUNT(*) FROM posts WHERE id >= :startId AND id < :endId")
     suspend fun getPostCountInRange(startId: Int, endId: Int): Int
 
     @Transaction
     suspend fun insertPostsForPage(posts: List<Post>, page: Int, pageSize: Int) {
-        // Insert posts for a specific page
         insertPosts(posts)
     }
 }
