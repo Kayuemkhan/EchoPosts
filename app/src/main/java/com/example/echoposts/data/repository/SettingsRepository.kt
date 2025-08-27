@@ -30,42 +30,42 @@ class SettingsRepository @Inject constructor(
             )
             
             // Account Section
-            add(SettingsItem.Header(R.string.settings_account))
-            add(
-                SettingsItem.ActionItem(
-                    title = R.string.settings_profile,
-                    subtitle = R.string.settings_profile_subtitle,
-                    icon = R.drawable.ic_person,
-                    key = "profile"
-                )
-            )
-            add(
-                SettingsItem.ActionItem(
-                    title = R.string.settings_privacy,
-                    subtitle = R.string.settings_privacy_subtitle,
-                    icon = R.drawable.ic_privacy,
-                    key = "privacy"
-                )
-            )
-            
-            // Data & Storage Section
-            add(SettingsItem.Header(R.string.settings_data_storage))
-            add(
-                SettingsItem.ActionItem(
-                    title = R.string.settings_clear_cache,
-                    subtitle = R.string.settings_clear_cache_subtitle,
-                    icon = R.drawable.ic_storage,
-                    key = "clear_cache"
-                )
-            )
-            add(
-                SettingsItem.ActionItem(
-                    title = R.string.settings_data_usage,
-                    subtitle = R.string.settings_data_usage_subtitle,
-                    icon = R.drawable.ic_data_usage,
-                    key = "data_usage"
-                )
-            )
+//            add(SettingsItem.Header(R.string.settings_account))
+//            add(
+//                SettingsItem.ActionItem(
+//                    title = R.string.settings_profile,
+//                    subtitle = R.string.settings_profile_subtitle,
+//                    icon = R.drawable.ic_person,
+//                    key = "profile"
+//                )
+//            )
+//            add(
+//                SettingsItem.ActionItem(
+//                    title = R.string.settings_privacy,
+//                    subtitle = R.string.settings_privacy_subtitle,
+//                    icon = R.drawable.ic_privacy,
+//                    key = "privacy"
+//                )
+//            )
+//
+//            // Data & Storage Section
+//            add(SettingsItem.Header(R.string.settings_data_storage))
+//            add(
+//                SettingsItem.ActionItem(
+//                    title = R.string.settings_clear_cache,
+//                    subtitle = R.string.settings_clear_cache_subtitle,
+//                    icon = R.drawable.ic_storage,
+//                    key = "clear_cache"
+//                )
+//            )
+//            add(
+//                SettingsItem.ActionItem(
+//                    title = R.string.settings_data_usage,
+//                    subtitle = R.string.settings_data_usage_subtitle,
+//                    icon = R.drawable.ic_data_usage,
+//                    key = "data_usage"
+//                )
+//            )
             
             // About Section
             add(SettingsItem.Header(R.string.settings_about))
@@ -119,14 +119,14 @@ class SettingsRepository @Inject constructor(
                     key = "feedback"
                 )
             )
-            add(
-                SettingsItem.ActionItem(
-                    title = R.string.settings_rate_app,
-                    subtitle = R.string.settings_rate_app_subtitle,
-                    icon = R.drawable.ic_star,
-                    key = "rate_app"
-                )
-            )
+//            add(
+//                SettingsItem.ActionItem(
+//                    title = R.string.settings_rate_app,
+//                    subtitle = R.string.settings_rate_app_subtitle,
+//                    icon = R.drawable.ic_star,
+//                    key = "rate_app"
+//                )
+//            )
             
             // Danger Zone
             add(SettingsItem.Header(R.string.settings_danger_zone))

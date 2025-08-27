@@ -64,7 +64,6 @@ class PostsAdapter(
                 holder.bind(postItem.post)
             }
             is LoadingViewHolder -> {
-                // Loading view doesn't need binding
             }
         }
     }
@@ -90,10 +89,8 @@ class PostsAdapter(
                 tvBody.text = post.body
                 tvUserId.text = "User ${post.userId}"
 
-                // Set user initial in avatar
                 tvUserInitial.text = tvUserId.text.subSequence(0,1)
 
-                // Set favorite icon
                 btnFavourites.setImageResource(
                     if (post.isFavourite) {
                         R.drawable.ic_favorite_filled
