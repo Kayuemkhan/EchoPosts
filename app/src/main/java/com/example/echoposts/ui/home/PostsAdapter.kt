@@ -92,7 +92,7 @@ class PostsAdapter(
                 tvUserId.text = "User ${post.userId}"
 
                 // Set user initial in avatar
-                tvUserInitial.text = post.userId.toString()
+                tvUserInitial.text = tvUserId.text.subSequence(0,1)
 
                 // Set favorite icon
                 btnFavourites.setImageResource(
