@@ -153,7 +153,7 @@ API/Database → Repository → ViewModel → UI
 
 ### **1. Clone Repository**
 ```bash
-git clone https://github.com/yourusername/echoposts.git
+git clone https://github.com/Kayuemkhan/echoposts.git
 cd echoposts
 ```
 
@@ -713,12 +713,3 @@ SOFTWARE.
 
 
 ---
-
-<div align="center">
-
-  <br>
-
-  <img src="https://img.shields.io/github/stars/Kayuemkhan/echoposts?style=social" />
-  <img src="https://img.shields.io/github/forks/Kayuemkhan/echoposts?style=social" />
-  <img src="https://img.shields.io/github/watchers/Kayuemkhan/echoposts?style=social" />
-</div>
