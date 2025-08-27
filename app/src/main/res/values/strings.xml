@@ -65,4 +65,5 @@
     <string name="settings_logout">Logout</string>
     <string name="settings_logout_subtitle">Sign out of your account</string>
     <string name="switch_to_dark_theme">Switch to dark theme</string>
+    <string name="header">Header</string>
 </resources>
