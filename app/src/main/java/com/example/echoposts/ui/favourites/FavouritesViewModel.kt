@@ -31,7 +31,7 @@ class FavouritesViewModel @Inject constructor(
         loadFavouritePosts()
     }
 
-    fun loadFavouritePosts() {
+    private fun loadFavouritePosts() {
         viewModelScope.launch {
             _favouritePostsState.value = UiState.Loading
 
