@@ -131,4 +131,9 @@ class PostRepository @Inject constructor(
             }
         }
     }
+    suspend fun getFavouritePosts(): Flow<List<Post>> = flow {
+        postDao.getFavouritePosts().collect { favourites ->
+            emit(favourites.map { it.toDomainModel() })
+        }
+    }.flowOn(Dispatchers.IO)
 }
