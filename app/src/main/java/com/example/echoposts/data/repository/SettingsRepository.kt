@@ -73,7 +73,7 @@ class SettingsRepository @Inject constructor(
                 SettingsItem.InfoItem(
                     title = R.string.settings_version,
                     value = getAppVersion(),
-                    icon = R.drawable.ic_info
+                    icon = R.drawable.ic_gavel
                 )
             )
             add(

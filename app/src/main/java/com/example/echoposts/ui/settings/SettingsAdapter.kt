@@ -81,15 +81,15 @@ class SettingsAdapter(
                 ivIcon.setImageResource(item.icon)
                 tvTitle.setText(item.title)
                 item.subtitle?.let { tvSubtitle.setText(it) }
-                
-                switchSetting.setOnCheckedChangeListener(null)
-                switchSetting.isChecked = item.isChecked
-                switchSetting.setOnCheckedChangeListener { _, isChecked ->
+
+                switchSettings.setOnCheckedChangeListener(null)
+                switchSettings.isChecked = item.isChecked
+                switchSettings.setOnCheckedChangeListener { _, isChecked ->
                     onSwitchChanged(item.key, isChecked)
                 }
                 
                 root.setOnClickListener {
-                    switchSetting.toggle()
+                    switchSettings.toggle()
                 }
             }
         }

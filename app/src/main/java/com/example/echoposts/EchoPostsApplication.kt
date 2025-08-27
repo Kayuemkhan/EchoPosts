@@ -1,22 +1,30 @@
 package com.example.echoposts
 
 
-
 import android.app.Application
-import com.example.echoposts.data.ThemeManager
 import dagger.hilt.android.HiltAndroidApp
-import javax.inject.Inject
+import androidx.appcompat.app.AppCompatDelegate
 
 @HiltAndroidApp
 class EchoPostsApplication : Application() {
 
-    @Inject
-    lateinit var themeManager: ThemeManager
-
     override fun onCreate() {
         super.onCreate()
 
-        // Apply saved theme preference
-        themeManager.applyTheme()
+        applySavedTheme()
+    }
+
+    private fun applySavedTheme() {
+        val prefs = getSharedPreferences("theme_prefs", MODE_PRIVATE)
+        val themeMode = prefs.getInt("theme_mode", 2) // Default to system (2)
+
+        val mode = when (themeMode) {
+            0 -> AppCompatDelegate.MODE_NIGHT_NO      // Light
+            1 -> AppCompatDelegate.MODE_NIGHT_YES     // Dark
+            2 -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM // System
+            else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        }
+
+        AppCompatDelegate.setDefaultNightMode(mode)
     }
 }

@@ -153,11 +153,11 @@ class SettingsFragment : Fragment() {
                 • Retrofit & OkHttp
                 • Hilt Dependency Injection
                 
-                © 2024 EchoPosts. All rights reserved.
+                © 2025 EchoPosts. All rights reserved.
             """.trimIndent()
             )
             .setPositiveButton("GitHub") { _, _ ->
-                openUrl("https://github.com/yourusername/echoposts")
+                openUrl("https://github.com/Kayuemkhan/echoposts")
             }
             .setNegativeButton("Close", null)
             .show()
@@ -187,16 +187,16 @@ class SettingsFragment : Fragment() {
     }
 
     private fun showLogoutDialog() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Logout")
-            .setMessage("Are you sure you want to logout? You'll need to sign in again to access your account.")
-            .setPositiveButton("Logout") { _, _ ->
-                viewModel.logout()
-                // Navigate to login screen
-                findNavController().navigate(R.id.action_settings_to_login)
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
+//        MaterialAlertDialogBuilder(requireContext())
+//            .setTitle("Logout")
+//            .setMessage("Are you sure you want to logout? You'll need to sign in again to access your account.")
+//            .setPositiveButton("Logout") { _, _ ->
+//                viewModel.logout()
+//                // Navigate to login screen
+//                findNavController().navigate(R.id.action_settings_to_login)
+//            }
+//            .setNegativeButton("Cancel", null)
+//            .show()
     }
 
     private fun openUrl(url: String) {
