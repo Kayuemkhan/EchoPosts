@@ -52,6 +52,7 @@
     <string name="settings_licenses">Licenses</string>
     <string name="settings_licenses_subtitle">View open source licenses</string>
 
+    <string name="settings">Settings</string>
     <string name="settings_support">Support</string>
     <string name="settings_help">Help &amp; FAQ</string>
     <string name="settings_help_subtitle">Get help and support</string>
