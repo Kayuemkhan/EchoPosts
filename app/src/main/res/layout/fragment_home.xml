@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment"
     android:layout_marginBottom="80dp"
-    >
+    tools:context=".ui.home.HomeFragment">
 
+    <!-- App Bar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:visibility="gone"
         android:id="@+id/toolbar"
@@ -21,15 +20,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Search View -->
+    <SearchView
+        android:id="@+id/search_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/search_background"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search posts..."
+        android:searchIcon="@drawable/ic_search"
+        android:closeIcon="@drawable/ic_close"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Search Progress -->
+    <ProgressBar
+        android:id="@+id/search_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/search_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        tools:visibility="visible" />
+
+    <!-- Pull to Refresh Layout -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/search_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
+        <!-- RecyclerView for Posts -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
@@ -42,6 +70,7 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+    <!-- Loading Progress Bar -->
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
@@ -53,6 +82,49 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:visibility="visible" />
 
+    <!-- Search Empty State -->
+    <LinearLayout
+        android:id="@+id/search_empty_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible">
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_search_empty"
+            android:alpha="0.6"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/tv_empty_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No posts found"
+            android:textSize="16sp"
+            android:textColor="@color/gray"
+            android:gravity="center"
+            tools:text="No posts found for 'android'" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Try a different search term"
+            android:textSize="14sp"
+            android:textColor="@color/gray"
+            android:gravity="center"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+    <!-- Error Layout -->
     <LinearLayout
         android:id="@+id/error_layout"
         android:layout_width="wrap_content"
@@ -77,7 +149,7 @@
             android:id="@+id/tv_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/something_went_wrong"
+            android:text="Something went wrong"
             android:textSize="16sp"
             android:textColor="@color/gray"
             android:gravity="center"
@@ -88,7 +160,7 @@
             android:id="@+id/btn_retry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/retry"
+            android:text="Retry"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
     </LinearLayout>
