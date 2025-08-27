@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="com.example.echoposts.ui.search.SettingsFragment"
+        android:name="com.example.echoposts.ui.settings.SettingsFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_settings" />
 
