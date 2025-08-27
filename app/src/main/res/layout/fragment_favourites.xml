@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.favourites.FavouritesFragment">
 
-    <!-- App Bar -->
     <com.google.android.material.appbar.MaterialToolbar
+        android:visibility="gone"
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
@@ -18,7 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Pull to Refresh Layout -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="0dp"
@@ -28,7 +27,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <!-- RecyclerView for Favourite Posts -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
@@ -41,7 +39,6 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <!-- Loading Progress Bar -->
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
@@ -104,7 +101,6 @@
 
     </LinearLayout>
 
-    <!-- Error Layout -->
     <LinearLayout
         android:id="@+id/error_layout"
         android:layout_width="wrap_content"

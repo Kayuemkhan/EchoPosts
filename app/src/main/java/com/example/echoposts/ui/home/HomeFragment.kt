@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.DividerItemDecoration
+
 import com.example.echoposts.R
 import com.example.echoposts.databinding.FragmentHomeBinding
 import com.example.echoposts.domain.model.SearchState

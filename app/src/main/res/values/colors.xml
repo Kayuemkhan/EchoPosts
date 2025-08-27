@@ -13,4 +13,12 @@
     <color name="gray">#FF757575</color>
     <color name="red">#FFF44336</color>
     <color name="light_gray">#FFF5F5F5</color>
+
+    <color name="card_bg_glass">#B3FFFFFF</color> <!-- semi-transparent white for glass effect -->
+    <color name="card_border_glass">#40FFFFFF</color> <!-- subtle white border -->
+    <color name="accent_badge">#EA5444</color> <!-- vivid accent for badge (reddish) -->
+    <color name="card_divider">#22FFFFFF</color> <!-- faint divider for glass cards -->
+    <color name="text_dark">#222B45</color> <!-- dark for titles -->
+    <color name="text_subtle">#665E5E</color> <!-- muted for body text -->
+    <color name="date_dim">#4B4B4B</color> <!-- low-contrast date -->
 </resources>

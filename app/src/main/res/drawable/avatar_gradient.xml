@@ -1,0 +1,6 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <gradient
+        android:startColor="#7F53AC"
+        android:endColor="#647DEE"
+        android:angle="45"/>
+</shape>

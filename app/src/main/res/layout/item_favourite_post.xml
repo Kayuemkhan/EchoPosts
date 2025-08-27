@@ -19,7 +19,6 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- User Avatar -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/user_avatar"
             android:layout_width="40dp"
@@ -34,21 +33,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="U"
+                android:text="@string/u"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- User ID -->
         <TextView
             android:id="@+id/tv_user_id"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="8dp"
-            android:text="User 1"
+            android:text="@string/user_1"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/primary"
@@ -57,13 +55,12 @@
             app:layout_constraintEnd_toStartOf="@id/btn_remove"
             tools:text="User 1" />
 
-        <!-- Favourite Badge -->
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="8dp"
-            android:text="★ Favourite"
+            android:text="@string/favourite"
             android:textSize="12sp"
             android:textColor="@color/red"
             android:textStyle="bold"
@@ -72,20 +69,18 @@
             app:layout_constraintEnd_toStartOf="@id/btn_remove"
             app:layout_constraintBottom_toBottomOf="@id/user_avatar" />
 
-        <!-- Remove Button -->
         <ImageButton
             android:id="@+id/btn_remove"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_delete"
-            android:contentDescription="Remove from favourites"
+            android:contentDescription="@string/remove_from_favourites"
             android:scaleType="centerInside"
             app:layout_constraintTop_toTopOf="@id/user_avatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/user_avatar" />
 
-        <!-- Progress Bar for Delete Action -->
         <ProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="24dp"
@@ -97,7 +92,6 @@
             app:layout_constraintEnd_toEndOf="@id/btn_remove"
             tools:visibility="visible" />
 
-        <!-- Post Title -->
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="0dp"
@@ -114,7 +108,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="sunt aut facere repellat provident occaecati excepturi optio reprehenderit" />
 
-        <!-- Post Body -->
         <TextView
             android:id="@+id/tv_body"
             android:layout_width="0dp"
@@ -131,8 +124,8 @@
             app:layout_constraintBottom_toTopOf="@id/divider"
             tools:text="quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto" />
 
-        <!-- Divider -->
         <View
+            android:visibility="gone"
             android:id="@+id/divider"
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -142,12 +135,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Added to Favourites Timestamp -->
         <TextView
+            android:visibility="gone"
             android:id="@+id/tv_date_added"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Added to favourites"
+            android:text="@string/added_to_favourites"
             android:textSize="12sp"
             android:textColor="@color/gray"
             android:paddingTop="12dp"
@@ -156,10 +149,12 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
+
+            android:visibility="gone"
             android:id="@+id/tv_read_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Read full post"
+            android:text="@string/read_full_post"
             android:textSize="12sp"
             android:textColor="@color/primary"
             android:textStyle="bold"
