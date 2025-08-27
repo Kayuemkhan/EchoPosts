@@ -1,17 +1,19 @@
 package com.example.echoposts.ui.home
 
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.example.echoposts.R
 import com.example.echoposts.databinding.FragmentHomeBinding
+import com.example.echoposts.domain.model.SearchState
 import com.example.echoposts.ui.common.PaginationScrollListener
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +43,7 @@ class HomeFragment : Fragment() {
 
         setupRecyclerView()
         setupSwipeRefresh()
+        setupSearchView()
         setupRetryButton()
         observeViewModel()
     }
@@ -50,8 +53,8 @@ class HomeFragment : Fragment() {
             onFavouriteClick = { post ->
                 viewModel.toggleFavourite(post)
             },
-            onPostClick = {
-
+            onPostClick = { post ->
+                // Handle post click - maybe navigate to detail screen
             }
         )
 
@@ -75,7 +78,7 @@ class HomeFragment : Fragment() {
                 }
 
                 override fun hasMoreData(): Boolean {
-                    return viewModel.paginationState.value.hasMoreData
+                    return viewModel.paginationState.value.hasMoreData && !viewModel.isSearchMode.value
                 }
             })
         }
@@ -87,10 +90,33 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun setupSearchView() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                binding.searchView.clearFocus()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.onSearchQueryChanged(newText ?: "")
+                return true
+            }
+        })
+
+        binding.searchView.setOnCloseListener {
+            viewModel.exitSearchMode()
+            false
+        }
+    }
+
     private fun setupRetryButton() {
         binding.btnRetry.setOnClickListener {
             viewModel.clearError()
-            viewModel.refreshPosts()
+            if (viewModel.isSearchMode.value) {
+                viewModel.onSearchQueryChanged(viewModel.searchQuery.value)
+            } else {
+                viewModel.refreshPosts()
+            }
         }
     }
 
@@ -99,42 +125,85 @@ class HomeFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.posts.collect { posts ->
                 val paginationState = viewModel.paginationState.value
+                val isSearchMode = viewModel.isSearchMode.value
+
                 postsAdapter.submitPostsWithLoading(
                     posts = posts,
-                    showLoading = paginationState.isLoadingMore && paginationState.hasMoreData
+                    showLoading = !isSearchMode && paginationState.isLoadingMore && paginationState.hasMoreData
                 )
             }
         }
 
-        // Observe pagination state
+        // Observe search state
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.searchState.collect { searchState ->
+                when (searchState) {
+                    is SearchState.Idle -> {
+                        binding.searchProgress.visibility = View.GONE
+                        binding.searchEmptyState.visibility = View.GONE
+                        binding.recyclerView.visibility = View.VISIBLE
+                    }
+                    is SearchState.Searching -> {
+                        binding.searchProgress.visibility = View.VISIBLE
+                        binding.searchEmptyState.visibility = View.GONE
+                        binding.errorLayout.visibility = View.GONE
+                    }
+                    is SearchState.Results -> {
+                        binding.searchProgress.visibility = View.GONE
+                        binding.searchEmptyState.visibility = View.GONE
+                        binding.errorLayout.visibility = View.GONE
+                        binding.recyclerView.visibility = View.VISIBLE
+                    }
+                    is SearchState.Empty -> {
+                        binding.searchProgress.visibility = View.GONE
+                        binding.recyclerView.visibility = View.GONE
+                        binding.errorLayout.visibility = View.GONE
+                        binding.searchEmptyState.visibility = View.VISIBLE
+                        binding.tvEmptyMessage.text = "No posts found for \"${searchState.query}\""
+                    }
+                    is SearchState.Error -> {
+                        binding.searchProgress.visibility = View.GONE
+                        binding.searchEmptyState.visibility = View.GONE
+                        if (viewModel.posts.value.isEmpty()) {
+                            binding.recyclerView.visibility = View.GONE
+                            binding.errorLayout.visibility = View.VISIBLE
+                            binding.tvError.text = searchState.message
+                        } else {
+                            showErrorSnackbar("Search failed: ${searchState.message}")
+                        }
+                    }
+                }
+            }
+        }
+
+        // Observe pagination state (existing code)
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.paginationState.collect { state ->
                 when {
-                    state.isLoading -> {
+                    state.isLoading && !viewModel.isSearchMode.value -> {
                         binding.progressBar.visibility = View.VISIBLE
                         binding.errorLayout.visibility = View.GONE
                         binding.recyclerView.visibility = View.GONE
+                        binding.searchEmptyState.visibility = View.GONE
                     }
-                    state.error != null && viewModel.posts.value.isEmpty() -> {
+                    state.error != null && viewModel.posts.value.isEmpty() && !viewModel.isSearchMode.value -> {
                         binding.progressBar.visibility = View.GONE
                         binding.recyclerView.visibility = View.GONE
                         binding.errorLayout.visibility = View.VISIBLE
+                        binding.searchEmptyState.visibility = View.GONE
                         binding.tvError.text = state.error
                     }
                     else -> {
                         binding.progressBar.visibility = View.GONE
                         binding.errorLayout.visibility = View.GONE
                         binding.recyclerView.visibility = View.VISIBLE
+                        binding.searchEmptyState.visibility = View.GONE
 
                         // Show snackbar for load more errors
-                        if (state.error != null && viewModel.posts.value.isNotEmpty()) {
-                            Snackbar.make(
-                                binding.root,
-                                "Failed to load more posts: ${state.error}",
-                                Snackbar.LENGTH_LONG
-                            ).setAction("Retry") {
+                        if (state.error != null && viewModel.posts.value.isNotEmpty() && !viewModel.isSearchMode.value) {
+                            showErrorSnackbar("Failed to load more posts: ${state.error}") {
                                 viewModel.loadNextPage()
-                            }.show()
+                            }
                             viewModel.clearError()
                         }
                     }
@@ -142,10 +211,11 @@ class HomeFragment : Fragment() {
 
                 // Update posts with current loading state
                 val posts = viewModel.posts.value
+                val isSearchMode = viewModel.isSearchMode.value
                 if (posts.isNotEmpty()) {
                     postsAdapter.submitPostsWithLoading(
                         posts = posts,
-                        showLoading = state.isLoadingMore && state.hasMoreData
+                        showLoading = !isSearchMode && state.isLoadingMore && state.hasMoreData
                     )
                 }
             }
@@ -159,24 +229,14 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun showErrorSnackbar(message: String, actionText: String = "Retry", action: () -> Unit = {}) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
+            .setAction(actionText) { action() }
+            .show()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-    private fun showErrorSnackbar(message: String, actionText: String = "Retry", action: () -> Unit = {}) {
-        view?.let { v ->
-            com.google.android.material.snackbar.Snackbar.make(v, message, com.google.android.material.snackbar.Snackbar.LENGTH_LONG)
-                .setAction(actionText) { action() }
-                .show()
-        }
-    }
-
-    private fun handlePaginationError(error: String) {
-        // Only show snackbar if we have existing data
-        if (viewModel.posts.value.isNotEmpty()) {
-            showErrorSnackbar("Failed to load more posts") {
-                viewModel.loadNextPage()
-            }
-        }
     }
 }
