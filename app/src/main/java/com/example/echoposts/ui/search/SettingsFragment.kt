@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.echoposts.databinding.FragmentSearchBinding
+import com.example.echoposts.databinding.FragmentSettingsBinding
 
-class SearchFragment : Fragment() {
+class SettingsFragment : Fragment() {
 
-    private var _binding: FragmentSearchBinding? = null
+    private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -19,14 +19,14 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val searchViewModel =
-            ViewModelProvider(this).get(SearchViewModel::class.java)
+        val settingsViewModel =
+            ViewModelProvider(this)[SettingsViewModel::class.java]
 
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textDashboard
-        searchViewModel.text.observe(viewLifecycleOwner) {
+        settingsViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root
