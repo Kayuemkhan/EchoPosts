@@ -131,9 +131,50 @@ class PostRepository @Inject constructor(
             }
         }
     }
+
+
     suspend fun getFavouritePosts(): Flow<List<Post>> = flow {
         postDao.getFavouritePosts().collect { favourites ->
             emit(favourites.map { it.toDomainModel() })
         }
     }.flowOn(Dispatchers.IO)
+
+
+    suspend fun getFavouritePostsList(): Result<List<Post>> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val favourites = postDao.getFavouritePostsList()
+                Result.success(favourites.map { it.toDomainModel() })
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    suspend fun clearAllFavourites(): Result<Unit> {
+        return withContext(Dispatchers.IO) {
+            try {
+                // Get all favourite posts and update them
+                val favourites = postDao.getFavouritePostsList()
+                favourites.forEach { post ->
+                    postDao.updateFavouriteStatus(post.id, false)
+                }
+                Result.success(Unit)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+
+    suspend fun isPostFavourite(postId: Int): Boolean {
+        return withContext(Dispatchers.IO) {
+            try {
+                val post = postDao.getPostById(postId)
+                post?.isFavourite ?: false
+            } catch (e: Exception) {
+                false
+            }
+        }
+    }
 }

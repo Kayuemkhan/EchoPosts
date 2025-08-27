@@ -75,13 +75,11 @@ class FavouritesViewModel @Inject constructor(
 
     fun removeFromFavourites(post: Post) {
         viewModelScope.launch {
-            // Add to deleting set for UI feedback
-            _deletingPostIds.value = _deletingPostIds.value + post.id
+            _deletingPostIds.value += post.id
 
             try {
                 val success = postRepository.toggleFavourite(post.id)
                 if (success) {
-                    // Remove from current list immediately for better UX
                     val currentState = _favouritePostsState.value
                     if (currentState is UiState.Success) {
                         val updatedList = currentState.data.filter { it.id != post.id }
@@ -97,7 +95,7 @@ class FavouritesViewModel @Inject constructor(
                 _favouritePostsState.value = UiState.Error("Failed to remove from favourites")
             } finally {
                 // Remove from deleting set
-                _deletingPostIds.value = _deletingPostIds.value - post.id
+                _deletingPostIds.value -= post.id
             }
         }
     }

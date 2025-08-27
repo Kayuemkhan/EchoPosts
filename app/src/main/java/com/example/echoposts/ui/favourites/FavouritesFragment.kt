@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.echoposts.R
 import com.example.echoposts.databinding.FragmentFavouritesBinding
+import com.example.echoposts.domain.model.Post
 import com.example.echoposts.domain.model.UiState
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
