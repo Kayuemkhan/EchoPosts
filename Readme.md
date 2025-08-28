@@ -8,7 +8,7 @@
 </div>
 
 <div align="center">
-  <h3>🚀 A feature-rich social media app built with modern Android technologies</h3>
+  <h3>🚀 EchoPosts – posts that “echo” back when favourited or searched.</h3>
   <p>Discover, explore, and save your favorite posts with a beautiful, intuitive interface</p>
 </div>
 
