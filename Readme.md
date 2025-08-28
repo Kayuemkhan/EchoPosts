@@ -14,13 +14,13 @@
 
 <!-- ✅ Add screenshots preview here -->
 <div align="center">
-  <img src="previews/Login.jpeg" width="574" />
-  <img src="previews/Register.jpeg" width="574" />
-  <img src="previews/Home.jpeg" width="574" />
-  <img src="previews/Search.jpeg" width="574" />
-  <img src="previews/Favourites.jpeg" width="574" />
-  <img src="previews/Settings.jpeg" width="574" />
-  <img src="previews/Dark_Mode.jpeg" width="574" />
+  <img src="previews/Login.jpeg" width="200" />
+  <img src="previews/Register.jpeg" width="200" />
+  <img src="previews/Home.jpeg" width="200" />
+  <img src="previews/Search.jpeg" width="200" />
+  <img src="previews/Favourites.jpeg" width="200" />
+  <img src="previews/Settings.jpeg" width="200" />
+  <img src="previews/Dark_Mode.jpeg" width="200" />
 </div>
 
 ---
