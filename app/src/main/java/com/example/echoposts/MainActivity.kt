@@ -46,11 +46,6 @@ class MainActivity : AppCompatActivity() {
         observeThemeChanges()
 
 
-
-
-
-
-
         WindowInsetsControllerCompat(window, window.decorView).apply {
             isAppearanceLightStatusBars = true
         }

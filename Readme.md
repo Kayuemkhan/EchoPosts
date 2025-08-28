@@ -1,4 +1,4 @@
-# 📱 EchoPosts - Modern Social Media Android App
+# 📱 EchoPosts - Modern Android Authentication App
 
 <div align="center">
   <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" />
@@ -8,27 +8,9 @@
 </div>
 
 <div align="center">
-  <h3>🚀 EchoPosts – posts that “echo” back when favourited or searched.</h3>
-  <p>Discover, explore, and save your favorite posts with a beautiful, intuitive interface</p>
+  <h3>🚀 EchoPosts – posts that "echo" back when favourited or searched.</h3>
+  <p>A modern Android app showcasing Clean Architecture with comprehensive authentication and posts management</p>
 </div>
-
----
-
-## 📋 Table of Contents
-
-- [✨ Features](#-features)
-- [🏗️ Architecture](#️-architecture)
-- [🛠️ Tech Stack](#️-tech-stack)
-- [🎯 Prerequisites](#-prerequisites)
-- [⚡ Quick Start](#-quick-start)
-- [🔧 Setup Instructions](#-setup-instructions)
-- [🐛 Common Issues & Solutions](#-common-issues--solutions)
-- [📚 API Documentation](#-api-documentation)
-- [🎨 UI/UX Design](#-uiux-design)
-- [🔍 Testing](#-testing)
-- [📦 Build & Release](#-build--release)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
 
 ---
 
@@ -56,7 +38,6 @@
 ### ⚙️ **Settings & Configuration**
 - **Theme Management** - Light, Dark, and System themes
 - **About Section** - App information and version details
-- **Libraries Info** - Open source dependencies list
 - **User Preferences** - Customizable app settings
 
 ---
@@ -85,20 +66,20 @@ EchoPosts follows **Clean Architecture** principles with **MVVM (Model-View-View
 
 ### 🔄 **Data Flow**
 ```
-API/Database → Repository → ViewModel → UI
-     ↑                                  ↓
-     └── ← ← ← ← User Actions ← ← ← ← ← ←
+API/Database → Repository → UseCase → ViewModel → UI
+     ↑                                            ↓
+     └── ← ← ← ← ← User Actions ← ← ← ← ← ← ← ← ← ←
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Tech Stack & Libraries
 
 ### **Core Technologies**
 | Technology | Version | Purpose |
 |------------|---------|---------|
-| **Kotlin** | 2.0.21 | Primary language |
-| **Android SDK** | API 24-35 | Platform framework |
+| **Kotlin** | 2.0.21 | Primary programming language |
+| **Android SDK** | API 24-36 | Platform framework |
 | **Material Components** | 1.12.0 | UI components |
 
 ### **Architecture Components**
@@ -111,45 +92,39 @@ API/Database → Repository → ViewModel → UI
 ### **Networking & Data**
 | Library | Version | Purpose |
 |---------|---------|---------|
-| **Retrofit** | 2.11.0 | HTTP client |
+| **Retrofit** | 2.11.0 | HTTP client for API calls |
 | **OkHttp** | 4.12.0 | Network layer |
 | **Gson** | 2.11.0 | JSON serialization |
 
 ### **Dependency Injection**
 | Library | Version | Usage |
 |---------|---------|--------|
-| **Hilt** | 2.51.1 | Dependency injection |
+| **Hilt** | 2.51.1 | Dependency injection framework |
 
 ### **Reactive Programming**
 | Library | Version | Purpose |
 |---------|---------|---------|
 | **Kotlin Coroutines** | 1.8.1 | Asynchronous operations |
-| **StateFlow/Flow** | 1.8.1 | Reactive streams |
+| **StateFlow/Flow** | 1.8.1 | Reactive data streams |
+
+### **Testing Libraries**
+| Library | Version | Purpose |
+|---------|---------|---------|
+| **JUnit** | 4.13.2 | Unit testing framework |
+| **Mockito** | 5.8.0 | Mocking dependencies |
+| **Espresso** | 3.7.0 | UI testing |
+| **Turbine** | 1.0.0 | Flow testing |
+| **Hilt Testing** | 2.51.1 | DI testing support |
 
 ---
 
-## 🎯 Prerequisites
+## ⚡ Setup & Build Instructions
 
-### **Development Environment**
+### **Prerequisites**
 - 🟢 **Android Studio** Hedgehog (2023.1.1) or newer
 - ☕ **JDK** 11 or higher
-- 🤖 **Android SDK** with API levels 24-35
+- 🤖 **Android SDK** with API levels 24-36
 - 📱 **Device/Emulator** running Android 7.0+ (API 24)
-
-### **Hardware Requirements**
-- **RAM:** 8GB+ recommended
-- **Storage:** 4GB+ available space
-- **CPU:** Intel i5 / AMD Ryzen 5 or equivalent
-
-### **Knowledge Prerequisites**
-- 📚 **Kotlin** fundamentals
-- 🏗️ **Android Architecture Components**
-- 🎨 **Material Design** principles
-- 🔄 **Git** version control
-
----
-
-## ⚡ Quick Start
 
 ### **1. Clone Repository**
 ```bash
@@ -158,10 +133,9 @@ cd echoposts
 ```
 
 ### **2. Open in Android Studio**
-```bash
-# Open Android Studio and select "Open an existing project"
-# Navigate to the cloned directory and select it
-```
+- Launch Android Studio
+- Select "Open an existing project"
+- Navigate to the cloned directory and select it
 
 ### **3. Sync Dependencies**
 ```bash
@@ -169,52 +143,102 @@ cd echoposts
 # If not, click "Sync Now" in the notification bar
 ```
 
-### **4. Run the App**
+### **4. Build the Project**
+```bash
+# Via Android Studio UI
+# Build → Make Project (Ctrl+F9)
+
+# Via Command Line
+./gradlew assembleDebug
+```
+
+### **5. Run the App**
 ```bash
 # Select your device/emulator
 # Click the Run button (▶️) or press Ctrl+R (Cmd+R on Mac)
+
+# Via Command Line
+./gradlew installDebug
+```
+
+### **6. Run Tests**
+```bash
+# Unit Tests
+./gradlew test
+
+# Instrumented Tests (requires connected device/emulator)
+./gradlew connectedAndroidTest
+
+# All Tests
+./gradlew check
 ```
 
 ---
 
-## 🔧 Setup Instructions
+## 🔍 Testing
 
-### **📦 Dependencies Management**
+### **🧪 Testing Strategy**
+The project implements comprehensive testing at multiple levels:
 
-The project uses **Gradle Version Catalog** for dependency management:
+#### **Unit Tests (src/test/)**
+- **ViewModel Tests** - LoginViewModel, RegisterViewModel
+- **Use Case Tests** - Validation logic
+- **Repository Tests** - Data layer logic
+- **Coverage:** ~80% of business logic
 
-#### **libs.versions.toml**
-```toml
-[versions]
-kotlin = "2.0.21"
-room = "2.6.1"
-hilt = "2.51.1"
-retrofit = "2.11.0"
-material = "1.12.0"
+#### **UI Tests (src/androidTest/)**
+- **Espresso Tests** - LoginFragment, RegisterFragment interactions
+- **Navigation Tests** - Fragment transitions
+- **Database Tests** - Room integration
+- **Coverage:** Key user journeys
 
-[libraries]
-androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
-# ... more dependencies
+### **📊 Current Test Coverage**
+```
+├── 🧪 Unit Tests
+│   ├── LoginViewModelTest.kt ✅ (8 test cases)
+│   ├── RegisterViewModelTest.kt ✅ (9 test cases)
+│   └── ValidationUseCaseTests.kt ⚠️ (Planned)
+│
+├── 🤖 UI Tests  
+│   ├── LoginFragmentTest.kt ✅ (10 test cases)
+│   ├── LoginFragmentSimpleTest.kt ✅ (12 test cases)
+│   └── RegisterFragmentTest.kt ⚠️ (Planned)
+│
+└── 🔧 Integration Tests
+    ├── AuthFlowTest.kt ⚠️ (Planned)
+    └── DatabaseMigrationTest.kt ⚠️ (Planned)
 ```
 
-#### **build.gradle.kts (Module: app)**
+### **🚀 Running Tests**
+```bash
+# Run all unit tests with coverage
+./gradlew testDebugUnitTest --info
+
+# Run UI tests on connected device
+./gradlew connectedAndroidTest --info
+
+# Generate test reports
+./gradlew test connectedAndroidTest
+# Reports: app/build/reports/tests/
+```
+
+---
+
+## 🔧 Configuration
+
+### **API Configuration**
 ```kotlin
-dependencies {
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.hilt.android)
-    ksp(libs.androidx.room.compiler)
-    ksp(libs.hilt.compiler)
-    // ... more dependencies
+object Constants {
+    const val BASE_URL = "https://jsonplaceholder.typicode.com/"
+    const val PAGE_SIZE = 10
+    const val TOTAL_POSTS = 100
 }
 ```
 
-### **🗄️ Database Setup**
-
-#### **Room Database Configuration**
+### **Database Setup**
 ```kotlin
 @Database(
-    entities = [User::class, Post::class],
+    entities = [User::class, Post::class, UserPostCrossRef::class],
     version = 1,
     exportSchema = false
 )
@@ -224,450 +248,121 @@ abstract class AppDatabase : RoomDatabase() {
 }
 ```
 
-### **🔌 API Integration**
+---
 
-#### **Retrofit Service**
-```kotlin
-interface PostApiService {
-    @GET("posts")
-    suspend fun getAllPosts(): Response<List<PostDto>>
-    
-    @GET("posts")
-    suspend fun getPostsPaginated(
-        @Query("_start") start: Int,
-        @Query("_limit") limit: Int
-    ): Response<List<PostDto>>
-}
-```
+## ⚠️ Assumptions & Limitations
 
-#### **Base URL Configuration**
-```kotlin
-object Constants {
-    const val BASE_URL = "https://jsonplaceholder.typicode.com/"
-    const val PAGE_SIZE = 10
-    const val TOTAL_POSTS = 100
-}
-```
+### **Current Assumptions**
+- **Mock API Usage** - JSONPlaceholder for posts data
+- **Local Authentication** - No real backend integration
+- **Simple Validation** - Basic email/password validation rules
+- **English Only** - No internationalization support
+- **Portrait Mode** - Optimized primarily for portrait orientation
 
-### **💉 Hilt Configuration**
+### **Known Limitations**
+- **No Real Authentication** - Uses local Room database only
+- **Limited Offline Support** - Basic caching, no conflict resolution
+- **No Push Notifications** - Local app only
+- **Basic Error Handling** - Limited retry mechanisms
+- **No User Management** - Single user session
 
-#### **Application Class**
-```kotlin
-@HiltAndroidApp
-class EchoPostsApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        ThemeUtils.applyTheme(this)
-    }
-}
-```
-
-#### **Modules Setup**
-```kotlin
-@Module
-@InstallIn(SingletonComponent::class)
-object DatabaseModule {
-    @Provides
-    @Singleton
-    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase
-}
-```
+### **Performance Considerations**
+- **Database Queries** - Optimized with proper indexing
+- **Image Loading** - No image optimization (posts are text-only)
+- **Memory Usage** - Pagination helps but could be optimized further
+- **Network Calls** - Basic retry logic, could be enhanced
 
 ---
 
-## 🐛 Common Issues & Solutions
+## 🚀 Future Development
 
-### **🔨 Build Issues**
+### **🎯 Immediate Roadmap**
 
-#### **Issue:** `UninitializedPropertyAccessException` with ThemeManager
+#### **1. 100% Testing Coverage**
+- **Complete Unit Tests** - All ViewModels, UseCases, Repositories
+- **Integration Tests** - End-to-end user flows
+- **Performance Tests** - Database and network layer
+- **Accessibility Tests** - UI accessibility compliance
+- **Screenshot Tests** - Visual regression testing
+
+#### **2. Dark Mode Efficiency Improvement**
+- **Theme Caching** - Reduce theme switch delays
+- **Dynamic Colors** - Material You color extraction
+- **Custom Theme Engine** - More granular theme controls
+- **Power Optimization** - OLED-friendly dark themes
+- **Smooth Transitions** - Animated theme switching
+
+#### **3. Modular Architecture Implementation**
 ```
-Caused by: kotlin.UninitializedPropertyAccessException: lateinit property themeManager has not been initialized
-```
-
-**🔧 Solution:**
-```kotlin
-// ❌ Wrong - Before super.onCreate()
-override fun onCreate(savedInstanceState: Bundle?) {
-    themeManager.applyTheme() // ThemeManager not injected yet!
-    super.onCreate(savedInstanceState)
-}
-
-// ✅ Correct - Use ThemeUtils
-override fun onCreate(savedInstanceState: Bundle?) {
-    ThemeUtils.applyTheme(this) // Works before injection
-    super.onCreate(savedInstanceState)
-}
-```
-
-#### **Issue:** `MaterialSwitch` theme resolution error
-```
-UnsupportedOperationException: Failed to resolve attribute at index 0: TypedValue
-```
-
-**🔧 Solution:**
-Replace `MaterialSwitch` with `SwitchCompat`:
-```xml
-<!-- ❌ Problematic -->
-<com.google.android.material.materialswitch.MaterialSwitch />
-
-<!-- ✅ Fixed -->
-<androidx.appcompat.widget.SwitchCompat />
+📁 EchoPosts/
+├── 🏗️ app/                    # Main app module
+├── 🔐 feature-auth/            # Authentication feature
+├── 📖 feature-posts/           # Posts management feature
+├── ⚙️ feature-settings/        # Settings feature
+├── 🧠 core-domain/             # Shared domain models
+├── 🎯 core-data/               # Data layer
+├── 🎨 core-ui/                 # Shared UI components
+└── 🛠️ core-common/             # Utilities & extensions
 ```
 
-### **🎨 UI Issues**
+#### **4. Migration to Jetpack Compose**
+- **UI Modernization** - Replace XML layouts with Compose
+- **State Management** - Compose state and side effects
+- **Navigation** - Compose Navigation
+- **Theming** - Material 3 Compose theming
+- **Testing** - Compose testing utilities
+- **Animation** - Advanced Compose animations
 
-#### **Issue:** Dark theme not applying immediately
-**🔧 Solution:**
-```kotlin
-// Apply theme before setContentView
-override fun onCreate(savedInstanceState: Bundle?) {
-    ThemeUtils.applyTheme(this)
-    super.onCreate(savedInstanceState)
-    // ... rest of code
-}
-```
+### **🔮 Long-term Vision**
 
-#### **Issue:** Navigation component crashes
-**🔧 Solution:**
-Ensure proper navigation graph setup:
-```xml
-<!-- nav_graph.xml -->
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    app:startDestination="@id/loginFragment">
-    
-    <fragment android:id="@+id/loginFragment" />
-    <fragment android:id="@+id/homeFragment" />
-</navigation>
-```
+#### **Backend Integration**
+- **Real Authentication** - Firebase Auth or custom backend
+- **Cloud Database** - Firestore or custom API
+- **Real-time Updates** - WebSocket or Firebase Realtime Database
+- **Push Notifications** - Firebase Cloud Messaging
 
-### **🌐 Network Issues**
+#### **Advanced Features**
+- **Social Features** - Comments, likes, sharing
+- **User Profiles** - Customizable user information
+- **Content Creation** - Create and edit posts
+- **Multimedia Support** - Images, videos in posts
+- **Advanced Search** - Full-text search with filters
 
-#### **Issue:** API calls failing in release builds
-**🔧 Solution:**
-Add network security config:
-```xml
-<!-- AndroidManifest.xml -->
-<application
-    android:networkSecurityConfig="@xml/network_security_config">
-</application>
-```
-
-```xml
-<!-- res/xml/network_security_config.xml -->
-<network-security-config>
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">jsonplaceholder.typicode.com</domain>
-    </domain-config>
-</network-security-config>
-```
-
-### **💾 Database Issues**
-
-#### **Issue:** Room migration errors
-**🔧 Solution:**
-```kotlin
-Room.databaseBuilder(context, AppDatabase::class.java, "database")
-    .fallbackToDestructiveMigration() // For development only
-    .build()
-```
-
----
-
-## 📚 API Documentation
-
-### **🔗 JSONPlaceholder API**
-
-**Base URL:** `https://jsonplaceholder.typicode.com/`
-
-#### **Endpoints Used**
-| Endpoint | Method | Description | Parameters |
-|----------|---------|-------------|------------|
-| `/posts` | GET | Get all posts | - |
-| `/posts` | GET | Get paginated posts | `_start`, `_limit` |
-
-#### **Response Format**
-```json
-{
-  "userId": 1,
-  "id": 1,
-  "title": "Post title",
-  "body": "Post content..."
-}
-```
-
-#### **Pagination Examples**
-```bash
-# Get first 10 posts
-GET /posts?_start=0&_limit=10
-
-# Get posts 11-20
-GET /posts?_start=10&_limit=10
-```
-
-### **🔍 Search Implementation**
-```sql
-SELECT * FROM posts 
-WHERE title LIKE '%query%' OR body LIKE '%query%' 
-ORDER BY CASE 
-    WHEN title LIKE 'query' THEN 1
-    WHEN title LIKE '%query%' THEN 2
-    ELSE 3
-END, id ASC
-```
-
----
-
-## 🎨 UI/UX Design
-
-### **🎭 Theme System**
-
-#### **Light Theme**
-```xml
-<style name="Theme.EchoPosts" parent="Theme.Material3.DayNight.NoActionBar">
-    <item name="colorPrimary">#6200EE</item>
-    <item name="colorOnPrimary">#FFFFFF</item>
-    <item name="android:colorBackground">#FFFFFF</item>
-    <item name="colorOnBackground">#000000</item>
-</style>
-```
-
-#### **Dark Theme**
-```xml
-<style name="Theme.EchoPosts" parent="Theme.Material3.DayNight.NoActionBar">
-    <item name="colorPrimary">#BB86FC</item>
-    <item name="colorOnPrimary">#000000</item>
-    <item name="android:colorBackground">#121212</item>
-    <item name="colorOnBackground">#FFFFFF</item>
-</style>
-```
-
-### **📱 Screen Designs**
-
-#### **Authentication Flow**
-- **Login Screen** - Clean form with validation
-- **Registration Screen** - Multi-step validation
-- **Validation** - Real-time input feedback
-
-#### **Main App Flow**
-- **Home Feed** - Infinite scroll with posts
-- **Search** - Real-time search with debouncing
-- **Favorites** - Saved posts management
-- **Settings** - Comprehensive configuration
-
-### **🎯 Design Principles**
-- **Material Design 3** compliance
-- **Accessibility** first approach
-- **Consistent spacing** (8dp grid)
-- **Proper color contrast** ratios
-- **Intuitive navigation** patterns
-
----
-
-## 🔍 Testing
-
-### **🧪 Unit Tests**
-```kotlin
-// Example ViewModel test
-@Test
-fun `login with valid credentials should return success`() = runTest {
-    // Given
-    val email = "test@example.com"
-    val password = "password123"
-    
-    // When
-    viewModel.login(email, password)
-    
-    // Then
-    assertEquals(AuthState.Success, viewModel.authState.value)
-}
-```
-
-### **🤖 Instrumented Tests**
-```kotlin
-@Test
-fun testDatabaseInsertion() {
-    val user = User("test@example.com", "password")
-    userDao.insertUser(user)
-    
-    val retrievedUser = userDao.getUserByEmail("test@example.com")
-    assertEquals(user.email, retrievedUser?.email)
-}
-```
-
-### **🎭 UI Tests**
-```kotlin
-@Test
-fun loginFlow() {
-    onView(withId(R.id.et_email)).perform(typeText("test@example.com"))
-    onView(withId(R.id.et_password)).perform(typeText("password123"))
-    onView(withId(R.id.btn_login)).perform(click())
-    
-    onView(withId(R.id.recycler_view)).check(matches(isDisplayed()))
-}
-```
-
----
-
-## 📦 Build & Release
-
-### **🏗️ Build Types**
-
-#### **Debug Build**
-```kotlin
-android {
-    buildTypes {
-        debug {
-            isDebuggable = true
-            applicationIdSuffix = ".debug"
-            versionNameSuffix = "-DEBUG"
-        }
-    }
-}
-```
-
-#### **Release Build**
-```kotlin
-android {
-    buildTypes {
-        release {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-}
-```
-
-### **🔐 Signing Configuration**
-```kotlin
-android {
-    signingConfigs {
-        release {
-            storeFile = file("path/to/keystore.jks")
-            storePassword = "store_password"
-            keyAlias = "key_alias"
-            keyPassword = "key_password"
-        }
-    }
-}
-```
-
-### **📋 Release Checklist**
-- [ ] Update version code and name
-- [ ] Test on multiple devices
-- [ ] Check ProGuard rules
-- [ ] Verify signing configuration
-- [ ] Test release build thoroughly
-- [ ] Update README and documentation
-- [ ] Create release notes
-
----
-
-## 🤝 Contributing
-
-### **🔀 Development Workflow**
-
-1. **Fork** the repository
-2. **Create** a feature branch
-   ```bash
-   git checkout -b feature/awesome-feature
-   ```
-3. **Commit** your changes
-   ```bash
-   git commit -m "Add awesome feature"
-   ```
-4. **Push** to the branch
-   ```bash
-   git push origin feature/awesome-feature
-   ```
-5. **Open** a Pull Request
-
-### **📏 Code Standards**
-
-#### **Kotlin Style Guide**
-```kotlin
-// ✅ Good
-class PostRepository @Inject constructor(
-    private val apiService: PostApiService,
-    private val postDao: PostDao
-) {
-    suspend fun getPosts(): Result<List<Post>> {
-        return withContext(Dispatchers.IO) {
-            // Implementation
-        }
-    }
-}
-```
-
-#### **Naming Conventions**
-- **Classes:** PascalCase (`PostRepository`)
-- **Functions:** camelCase (`getPosts()`)
-- **Variables:** camelCase (`currentUser`)
-- **Constants:** SNAKE_CASE (`PAGE_SIZE`)
-
-### **🔍 Code Review Guidelines**
-- **Architecture** compliance
-- **Performance** considerations
-- **Security** best practices
-- **Test coverage**
-- **Documentation** updates
+#### **Performance & Scalability**
+- **Caching Strategy** - Multi-layer caching
+- **Offline-First** - Comprehensive offline support
+- **Performance Monitoring** - Crashlytics, Performance monitoring
+- **CI/CD Pipeline** - Automated testing and deployment
 
 ---
 
 ## 📊 Project Statistics
 
-### **📈 Codebase Metrics**
+### **📈 Current Metrics**
 - **Languages:** Kotlin (95%), XML (5%)
-- **Lines of Code:** ~3,500+
-- **Files:** 50+ source files
-- **Test Coverage:** 80%+
-
-### **🏗️ Architecture Breakdown**
-- **Data Layer:** 30% (Repository, Database, API)
-- **Domain Layer:** 20% (Models, Use Cases)
-- **Presentation Layer:** 40% (UI, ViewModels)
-- **DI & Utils:** 10% (Hilt, Extensions)
+- **Lines of Code:** ~4,000+
+- **Source Files:** 60+ files
+- **Test Coverage:** 70%+ (Target: 100%)
+- **Build Time:** ~45 seconds (clean build)
 
 ---
 
-## 🔮 Future Enhancements
+## 🤝 Contributing
 
-### **🚀 Planned Features**
-- [ ] **Push Notifications** - Real-time updates
-- [ ] **User Profiles** - Custom user information
-- [ ] **Social Features** - Comments and likes
-- [ ] **Image Support** - Post images and galleries
-- [ ] **Offline Sync** - Background synchronization
+### **Development Workflow**
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/awesome-feature`
+3. Make your changes with proper tests
+4. Ensure all tests pass: `./gradlew check`
+5. Commit changes: `git commit -m "Add awesome feature"`
+6. Push to branch: `git push origin feature/awesome-feature`
+7. Create a Pull Request
 
-### **🛠️ Technical Improvements**
-- [ ] **Jetpack Compose** migration
-- [ ] **Modularization** - Feature modules
-- [ ] **CI/CD Pipeline** - Automated testing
-- [ ] **Performance Monitoring** - Crash analytics
-- [ ] **Unit Test Coverage** - 90%+ coverage
-
----
-
-## 🙏 Acknowledgments
-
-### **📚 Learning Resources**
-- [Android Developer Guides](https://developer.android.com/guide)
-- [Material Design Guidelines](https://material.io/design)
-- [Kotlin Documentation](https://kotlinlang.org/docs/)
-
-### **🎨 Design Inspiration**
-- Material Design 3 specifications
-- Modern Android app patterns
-- Community feedback and suggestions
-
-### **🔧 Tools & Services**
-- **Android Studio** - Primary IDE
-- **JSONPlaceholder** - Mock API service
-- **GitHub** - Version control
-- **Material Design Icons** - Icon resources
+### **Code Standards**
+- Follow [Kotlin Coding Conventions](https://kotlinlang.org/docs/coding-conventions.html)
+- Add tests for new features
+- Update documentation for API changes
+- Maintain architectural patterns
 
 ---
 
@@ -701,15 +396,8 @@ SOFTWARE.
 
 ## 📞 Contact & Support
 
-### **👤 Developer**
-- **GitHub:** [@Kayuemkhan](https://github.com/Kayuemkhan)
-- **Email:** abdulkayuem007@gmail.com
-
-
-### **🐛 Issues & Bug Reports**
-- Create an issue on [GitHub Issues](https://github.com/yourusername/echoposts/issues)
-- Use issue templates for bug reports and feature requests
-- Provide detailed reproduction steps
-
+**👤 Developer:** [@Kayuemkhan](https://github.com/Kayuemkhan)  
+**📧 Email:** abdulkayuem007@gmail.com  
+**🐛 Issues:** [GitHub Issues](https://github.com/Kayuemkhan/echoposts/issues)
 
 ---
