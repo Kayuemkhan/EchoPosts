@@ -228,9 +228,8 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             val newFavouriteStatus = postRepository.toggleFavourite(post.id)
 
-            // Update the current list with the new favourite status
             if (_isSearchMode.value) {
-                // Update search results
+
                 val currentSearchState = _searchState.value
                 if (currentSearchState is SearchState.Results) {
                     val updatedPosts = currentSearchState.posts.map {
@@ -244,7 +243,6 @@ class HomeViewModel @Inject constructor(
                     _posts.value = updatedPosts
                 }
             } else {
-                // Update main posts
                 val updatedPosts = allPosts.map {
                     if (it.id == post.id) {
                         it.copy(isFavourite = newFavouriteStatus)

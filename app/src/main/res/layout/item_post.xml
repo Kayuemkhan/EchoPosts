@@ -97,7 +97,7 @@
                     android:src="@drawable/ic_favorite_border"
                     android:contentDescription="@string/add_to_favourites"
                     android:scaleType="centerInside"
-                    app:tint="@color/gray" />
+                    />
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 

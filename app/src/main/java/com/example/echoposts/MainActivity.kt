@@ -1,35 +1,60 @@
 package com.example.echoposts
-
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.echoposts.data.ThemeManager
+import com.example.echoposts.data.repository.AuthRepository
 import com.example.echoposts.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var navView: BottomNavigationView
+    lateinit var navView : BottomNavigationView
+
+    @Inject
+    lateinit var authRepository: AuthRepository
+
+    @Inject
+    lateinit var themeManager: ThemeManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        themeManager.applyTheme()
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        navView = binding.navView
+
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+
+        if (!authRepository.isLoggedIn()) {
+            navController.navigate(R.id.loginFragment)
+        }
+
+        navView.setupWithNavController(navController)
+
+        observeThemeChanges()
+
+
+
+
+
+
+
         WindowInsetsControllerCompat(window, window.decorView).apply {
             isAppearanceLightStatusBars = true
         }
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        navView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.navigation_home ||
@@ -55,4 +80,11 @@ class MainActivity : AppCompatActivity() {
         navView.visibility = View.VISIBLE
     }
 
+    private fun observeThemeChanges() {
+        lifecycleScope.launch {
+            themeManager.isDarkMode.collect {
+
+            }
+        }
+    }
 }
