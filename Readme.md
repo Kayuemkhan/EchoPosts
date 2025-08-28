@@ -12,7 +12,6 @@
   <p>A modern Android app showcasing Clean Architecture with comprehensive authentication and posts management</p>
 </div>
 
-<!-- ✅ Add screenshots preview here -->
 <div align="center">
   <img src="previews/Login.jpeg" width="200" />
   <img src="previews/Register.jpeg" width="200" />
@@ -255,6 +254,7 @@ The project implements comprehensive testing at multiple levels:
 └── 🔧 Integration Tests
     ├── AuthFlowTest.kt ⚠️ (Planned)
     └── DatabaseMigrationTest.kt ⚠️ (Planned)
+    
 ```
 
 ### **🚀 Running Tests**
@@ -271,6 +271,13 @@ The project implements comprehensive testing at multiple levels:
 ```
 
 ---
+## 🔧 Testing Output
+
+
+<div align="center">
+  <img src="figure/LoginViewmodelTest.PNG" width="600" />
+
+</div>
 
 ## 🔧 Configuration
 
