@@ -275,7 +275,8 @@ The project implements comprehensive testing at multiple levels:
 
 
 <div align="center">
-  <img src="figure/LoginViewmodelTest.PNG" width="600" />
+  <img src="previews/LoginViewmodelTest.PNG" width="800" />
+  <img src="previews/RegisterViewModelTest.PNG" width="800" />
 
 </div>
 
